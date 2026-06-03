@@ -1,0 +1,33 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "header",
+          "key": "x-vercel-ip-country",
+          "value": "(GB|UK)"
+        }
+      ],
+      "destination": "/uk",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "header",
+          "key": "x-vercel-ip-country",
+          "value": "AU"
+        }
+      ],
+      "destination": "/au",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "destination": "/us",
+      "permanent": false
+    }
+  ]
+}
