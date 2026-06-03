@@ -1,0 +1,6 @@
+{
+  "name": "EV Savings Calculator",
+  "description": "An interactive calculator comparing petrol equivalent costs to electric vehicle charging costs with region-specific taxes and incentives like Australia's Luxury Car Tax and the UK's Salary Sacrifice benefits.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
