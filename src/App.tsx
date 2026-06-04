@@ -122,6 +122,12 @@ export default function App() {
                 <Building2 className="w-3.5 h-3.5" />
                 United Kingdom (£)
               </button>
+              <a href="https://aiguidehubs.blogspot.com/2026/06/how%20much%20money%20save%20ev.html" 
+   target="_blank" 
+   rel="noopener noreferrer"
+   className="ml-4 text-emerald-600 hover:text-emerald-700 font-bold transition-colors flex items-center">
+   EV Guide
+</a>
             </div>
 
             {/* Premium Theme Option Button */}
