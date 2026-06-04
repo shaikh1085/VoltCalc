@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap Location
+Sitemap: https://ev-saving-calculator.vercel.app/sitemap.xml
