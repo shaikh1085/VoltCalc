@@ -784,7 +784,7 @@ async function fetchLiveRates(country: SelectedCountry): Promise<LiveRates> {
 }
 
     // Generate lightweight, realistic dynamic market adjustments on top of live currencies
-    const fluctuation = 0.98 + Math.random() * 0.04; // +/- 2% daily fluctuation coefficient
+    const fluctuation = 3.60+ Math.random() * 0.04; // +/- 2% daily fluctuation coefficient
 
     if (country === 'us') {
       const usdRate = rates.USD || 1.0;
