@@ -39,6 +39,8 @@ export interface I18nDictionary {
   petrolEquivalent: string;
   petrolEfficiency: string;
   enterPetrolEfficiency: string;
+  gasPriceLabel: string;
+  fuelUnitLabel: string;
 }
 
 export function getI18n(country: SelectedCountry): I18nDictionary {
@@ -48,13 +50,15 @@ export function getI18n(country: SelectedCountry): I18nDictionary {
     petrol: isUS ? 'Gas' : 'Petrol',
     petrolCapital: isUS ? 'GAS' : 'PETROL',
     gasoline: isUS ? 'Gasoline' : 'Petrol',
-    litres: isUS ? 'Liters' : 'Litres',
-    litre: isUS ? 'Liter' : 'Litre',
-    petrolPricePerLitre: isUS ? 'Gas Price per Liter' : 'Petrol Price per Litre',
-    pricePerLitrePlaceholder: isUS ? 'Price per Liter' : 'Price per Litre',
+    litres: isUS ? 'Gallons' : 'Litres',
+    litre: isUS ? 'Gallon' : 'Litre',
+    petrolPricePerLitre: isUS ? 'Gas Price per Gallon' : 'Petrol Price per Litre',
+    pricePerLitrePlaceholder: isUS ? 'Price per Gallon' : 'Price per Litre',
     petrolEquivalent: isUS ? 'Gas Equivalent' : 'Petrol Equivalent',
     petrolEfficiency: isUS ? 'Gas Efficiency' : 'Petrol Efficiency',
-    enterPetrolEfficiency: isUS ? 'Enter Gas Equivalent Efficiency' : 'Enter Petrol Equivalent Efficiency'
+    enterPetrolEfficiency: isUS ? 'Enter Gas Equivalent Efficiency' : 'Enter Petrol Equivalent Efficiency',
+    gasPriceLabel: isUS ? 'Gas Price (per Gallon)' : 'Petrol Price (per Litre)',
+    fuelUnitLabel: isUS ? 'Gallons' : 'Litres'
   };
 }
 
@@ -68,17 +72,22 @@ export function calculateEVValues(inputs: CalculatorInputs, country: SelectedCou
   
   const monthlyDistance = inputs.annualDistance / 12;
   
-  // 1. Petrol Car Cost Calculations
+  // 1. Petrol/Gas Car Cost Calculations
   let petrolLitersUsed = 0;
   let monthlyPetrolCost = 0;
   if (country === 'au') {
     // Fuel efficiency in L/100km
     petrolLitersUsed = (monthlyDistance / 100) * inputs.fuelEfficiency;
     monthlyPetrolCost = petrolLitersUsed * inputs.gasPrice;
-  } else {
-    // US & UK efficiency is in MPG, fuel bought in Liters
+  } else if (country === 'us') {
+    // US efficiency is in MPG, fuel bought in Gallons
     const monthlyGallonsUsed = inputs.fuelEfficiency > 0 ? (monthlyDistance / inputs.fuelEfficiency) : 0;
-    const litersPerGallon = country === 'uk' ? 4.54609 : 3.78541;
+    petrolLitersUsed = monthlyGallonsUsed; // Treated as gallons variable for US
+    monthlyPetrolCost = monthlyGallonsUsed * inputs.gasPrice; 
+  } else {
+    // UK efficiency is in MPG, fuel bought in Liters
+    const monthlyGallonsUsed = inputs.fuelEfficiency > 0 ? (monthlyDistance / inputs.fuelEfficiency) : 0;
+    const litersPerGallon = 4.54609;
     petrolLitersUsed = monthlyGallonsUsed * litersPerGallon;
     monthlyPetrolCost = petrolLitersUsed * inputs.gasPrice; 
   }
@@ -205,7 +214,7 @@ export function FuelVsChargingCard({ results }: CostAnalysisProps) {
             {results.currencySymbol}{Math.round(results.monthlyPetrolCost)}
           </span>
           <p className="text-xs text-slate-600 dark:text-slate-400 font-mono mt-2 uppercase tracking-wide">
-            Consumes ~{Math.round(results.petrolLitersUsed)} {i18n.litres}
+            Consumes ~{Math.round(results.petrolLitersUsed)} {i18n.fuelUnitLabel}
           </p>
           <div className="absolute bottom-0 left-0 h-1 w-full bg-slate-200 dark:bg-slate-800"></div>
         </div>
@@ -745,7 +754,7 @@ async function fetchLiveRates(country: SelectedCountry): Promise<LiveRates> {
     let homeChargingRate = defaults.defaultHomeChargingRate;
     let publicChargingRate = defaults.defaultPublicChargingRate;
 
-    const usdGas = 0.95;
+    const usdGas = country === 'us' ? 3.60 : 0.95; // True US default is per gallon
     const usdHome = 0.17;
     const usdPublic = 0.45;
     const fluctuation = 0.98 + Math.random() * 0.04;
@@ -788,7 +797,7 @@ async function fetchLiveRates(country: SelectedCountry): Promise<LiveRates> {
   } catch (err) {
     console.warn('Fallback to defaults:', err);
     return {
-      gasPrice: defaults.defaultGasPrice,
+      gasPrice: country === 'us' ? 3.60 : defaults.defaultGasPrice,
       homeChargingRate: defaults.defaultHomeChargingRate,
       publicChargingRate: defaults.defaultPublicChargingRate,
     };
@@ -1064,7 +1073,7 @@ export default function CountrySavingsPage({ params }: PageProps) {
     msrp: defaultVehicle.msrp[countryParam],
     annualDistance: config.defaultAnnualDistance,
     fuelEfficiency: defaultVehicle.petrolEfficiency[countryParam],
-    gasPrice: config.defaultGasPrice,
+    gasPrice: countryParam === 'us' ? 3.60 : config.defaultGasPrice,
     chargingHomeRatio: 80,
     chargingPublicRatio: 20,
     homeChargingRate: config.defaultHomeChargingRate,
@@ -1177,9 +1186,9 @@ export default function CountrySavingsPage({ params }: PageProps) {
         </div>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
         {/* Left Interactive Column */}
-        <div id="left-column-container" className="space-y-6 print:hidden">
+        <div id="left-column-container" className="lg:col-span-2 space-y-6 print:hidden">
           
           {/* STEP 1 */}
           <div id="step-1-card" className="bg-white dark:bg-slate-900/60 rounded-3xl p-6 border border-slate-150 dark:border-slate-800 relative">
@@ -1248,7 +1257,7 @@ export default function CountrySavingsPage({ params }: PageProps) {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-[10px] font-bold uppercase">{i18n.petrol} Price</label>
+                  <label className="text-[10px] font-bold uppercase">{i18n.gasPriceLabel}</label>
                   <input type="number" step="0.01" value={inputs.gasPrice || ''} onChange={(e) => updateNumberField('gasPrice', e.target.value)} className="w-full p-2 border rounded-xl bg-slate-50" />
                 </div>
                 <div>
