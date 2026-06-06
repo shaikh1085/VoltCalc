@@ -777,9 +777,11 @@ async function fetchLiveRates(country: SelectedCountry): Promise<LiveRates> {
     let publicChargingRate = defaults.defaultPublicChargingRate;
 
     // USD base values for standard conversion metrics
-    const usdGas = 0.95;
-    const usdHome = 0.17;
-    const usdPublic = 0.45;
+  if (country === 'us') {
+  gasPrice = 3.60; //  Ab hamesha exact $3.60 hi dikhayega
+  homeChargingRate = 0.17;
+  publicChargingRate = 0.45;
+}
 
     // Generate lightweight, realistic dynamic market adjustments on top of live currencies
     const fluctuation = 0.98 + Math.random() * 0.04; // +/- 2% daily fluctuation coefficient
