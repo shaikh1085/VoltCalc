@@ -844,60 +844,60 @@ interface PageProps {
 
 const SEO_METADATA_MAP: Record<string, { title: string; description: string }> = {
   us: {
-    title: "EV Savings Calculator US | 2026 Tax Credit & Fuel Cost Tool",
-    description: "Calculate your dynamic monthly EV savings in the USA. Includes real-time gas prices, electricity tariffs, and 2026 IRS Section 30D $7,500 Federal Tax Credit tracking."
+    title: "EV Savings Calculator US | Electric Vehicle Cost Calculator",
+    description: "Calculate your dynamic monthly EV savings in the USA. Use our free ev gas savings calculator to compare fuel costs and calculate electric vehicle charging cost instantly!",
   },
   uk: {
-    title: "EV Savings Calculator UK | Salary Sacrifice & BiK Tool",
-    description: "Discover how much you save switching to an electric vehicle in the UK. Track 2026 Benefit-in-Kind (BiK) rates, Salary Sacrifice corporate tax savings, and dynamic petrol vs charging metrics."
+    title: "EV Savings Calculator UK | Electric Car Cost Comparison Tool",
+    description: "Discover how much you save switching to an electric vehicle in the UK. Track your fuel savings, charging cost, and ev mileage with our UK calculator.",
   },
   au: {
-    title: "EV Savings Calculator Australia | LCT Exemption & Fuel Tool",
-    description: "Analyze fuel and power cost differentials for EVs in Australia. Automatically evaluates 2026 fuel-efficient Luxury Car Tax (LCT) thresholds and regional operational offsets."
+    title: "EV Savings Calculator Australia | Electric Vehicle Fuel Tool",
+    description: "Analyze fuel and power cost differentials for EVs in Australia. Calculate your electric vehicle efficiency and charging cost automatically today.",
   }
 };
 
 const FAQ_CONTENT_MAP: Record<SelectedCountry, Array<{ question: string; answer: string }>> = {
   us: [
     {
-      question: "How do I claim the 2026 $7,500 Federal Clean Vehicle Credit?",
-      answer: "To claim the IRS Section 30D Clean Vehicle Credit, you can transfer the credit directly to an eligible dealer at the point of sale to lower the purchase price immediately, or claim it on your federal tax return using IRS Form 8936. This requires the manufacturer to be qualified and the final assembly of the vehicle to have occurred in North America."
+      question: "How to calculate electric vehicle charging cost?",
+      answer: "To find your EV charging cost in the US, multiply your vehicle's total battery capacity (kWh) by your local electricity provider's rate per kWh. Our built-in ev savings calculator automates this process for you instantly."
     },
     {
-      question: "What are the income and MSRP caps for EV incentives?",
-      answer: "For the federal new EV credit, the vehicle's MSRP cannot exceed $80,000 for SUVs, vans, and pickups, or $55,000 for other passenger cars (sedans/hatchbacks). Additionally, your Modified Adjusted Gross Income (MAGI) must be under $300,000 for married couples filing jointly, $225,000 for heads of household, or $150,000 for single filers."
+      question: "How to calculate ev charging time?",
+      answer: "EV charging time depends on the charger speed. Simply divide your EV battery capacity by the charging station's power output (kW) to see how long it takes to charge from empty to full."
     },
     {
-      question: "Calculating home electricity overheads vs EV efficiency?",
-      answer: "Home charging costs depend directly on your utility provider's tariff and charging times. To calculate monthly overheads: (Annual Distance / Average Range) * Home Charging Share % * Home electricity cost per kWh. Utilizing off-peak smart EV tariffs (like time-of-use scheduling) can reduce home charging costs by 50% or more compared to standard flat-rate plans."
+      question: "How to calculate electric vehicle mileage and efficiency?",
+      answer: "You can track your electric vehicle mileage by dividing the total miles driven by the total kWh consumed. This data can be evaluated using an ev mpg calculator equivalent to understand your true gas savings."
     }
   ],
   uk: [
     {
-      question: "How do 2026 UK BiK rates work?",
-      answer: "For the 2026/2027 tax year, the Benefit-in-Kind (BiK) rate for fully electric vehicles (0g/km CO2 emissions) scales to 3%. This remains exceptionally low compared to standard petrol or diesel vehicles (which can exceed 30%), translating to massive annual company car and payroll tax savings for employees."
+      question: "How to calculate electric vehicle charging cost in the UK?",
+      answer: "To find your UK EV charging cost, multiply your car's battery capacity (kWh) by your domestic electricity tariff (pence per kWh). Our electric vehicle savings calculator makes this UK fuel comparison easy."
     },
     {
-      question: "What tax brackets benefit most from EV Salary Sacrifice?",
-      answer: "Higher rate (40%) and Additional rate (45%) taxpayers benefit the most from EV Salary Sacrifice schemes. Since lease payments are deducted from gross pre-tax income, these high-earning individuals save significantly on National Insurance contributions and income tax, often reducing the net cost of leasing an EV by up to 40-50% compared to a personal lease."
+      question: "How to calculate ev charging time?",
+      answer: "Charging time is calculated by dividing the battery size (kWh) by the charging rate (kW). A standard home wallbox charger (7kW) will charge a 60kWh electric car battery in approximately 8-9 hours."
     },
     {
-      question: "Average UK public charging tariffs vs home smart meters",
-      answer: "UK public rapid charging tariffs can range from 70p to 85p per kWh, whereas a standard home electricity smart meter with an EV time-of-use tariff (like Octopus Intelligent) can provide overnight charging as low as 7.5p to 9p per kWh. Prioritizing home charging with smart schedules maximizes your structural operational cost savings."
+      question: "How to calculate electric vehicle mileage and efficiency?",
+      answer: "Track your UK ev mileage by checking your miles per kWh. This helps you compare real-world running costs directly against petrol or diesel vehicles to see your total monthly savings."
     }
   ],
   au: [
     {
-      question: "What is the 2026 Luxury Car Tax (LCT) threshold for EVs?",
-      answer: "For fuel-efficient vehicles (including all pure electric vehicles), the Luxury Car Tax (LCT) threshold is significantly higher than for standard internal combustion vehicles (capped at over $89,000 AUD, depending on the exact financial year update). The 33% tax rate only applies to the portion of the vehicle's retail price exceeding this fuel-efficient limit."
+      question: "How to calculate electric vehicle charging cost in Australia?",
+      answer: "Multiply your EV's battery capacity by your electricity rate per kWh (e.g., peak or off-peak cents). Use our free ev savings calculator to instantly see how much cheaper running an EV is compared to internal combustion engines."
     },
     {
-      question: "Are electric cars exempt from Fringe Benefits Tax (FBT)?",
-      answer: "Yes, under the federal Treasury Laws Amendment, eligible zero-emission electric vehicles under the luxury car tax fuel-efficient limit are exempt from the 47% Fringe Benefits Tax (FBT) when provided as a company car or through a novated lease. This can save Australian drivers thousands of dollars annually in pre tax salary deductions."
+      question: "How to calculate ev charging time?",
+      answer: "Simply divide the battery capacity (kWh) by the power rating of the charger (kW). For example, a 7kW home charger will take around 10 hours to fully charge a 70kWh battery from empty."
     },
     {
-      question: "State-by-state EV registration rebates",
-      answer: "Rebate programs and registration incentives vary across Australian jurisdictions. While several states are transitionally phasing out direct purchase grants, many states continue to offer substantial ongoing registration discounts, stamp duty exemptions or reductions, and lower annual road taxes to incentivize electric vehicle ownership."
+      question: "How to calculate electric vehicle mileage and consumption?",
+      answer: "In Australia, electric vehicle efficiency is typically measured in kWh per 100km. You can calculate this by tracking the energy used over your driven distance to see your ongoing savings."
     }
   ]
 };
