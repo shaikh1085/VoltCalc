@@ -1,11 +1,31 @@
 {
-  "rewrites": [
+  "headers": [
     {
-      "source": "/(robots.txt|sitemap.xml)",
-      "destination": "/$1"
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/xml"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
     },
     {
-      "source": "/(.*)",
+      "source": "/robots.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/((?!robots\\.txt|sitemap\\.xml).* )",
       "destination": "/index.html"
     }
   ]
