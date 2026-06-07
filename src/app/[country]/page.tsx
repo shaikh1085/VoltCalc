@@ -778,21 +778,19 @@ async function fetchLiveRates(country: SelectedCountry): Promise<LiveRates> {
 
     // USD base values for standard conversion metrics
   // Strict fallback assignments for default calculation states
- if (country === 'us') {
-    gasPrice = 4.19;
-    homeChargingRate = 0.17;
-    publicChargingRate = 0.46;
-  } else if (country === 'uk') {
-    gasPrice = inputs.gasPrice && inputs.gasPrice !== 0 ? inputs.gasPrice : 1.42;
-    homeChargingRate = inputs.homeChargingRate && inputs.homeChargingRate !== 0 ? inputs.homeChargingRate : 0.23;
-    publicChargingRate = inputs.publicChargingRate && inputs.publicChargingRate !== 0 ? inputs.publicChargingRate : 0.42;
-  } else if (country === 'au') {
-    gasPrice = inputs.gasPrice && inputs.gasPrice !== 0 ? inputs.gasPrice : 1.95;
-    homeChargingRate = inputs.homeChargingRate && inputs.homeChargingRate !== 0 ? inputs.homeChargingRate : 0.28;
-    publicChargingRate = inputs.publicChargingRate && inputs.publicChargingRate !== 0 ? inputs.publicChargingRate : 0.65;
-    homeChargingRate = inputs.homeChargingRate || 0.28;
-    publicChargingRate = inputs.publicChargingRate || 0.65;
-  }
+if (country === 'us') {
+    gasPrice = Number(process.env.NEXT_PUBLIC_GAS_PRICE_US) || 4.19;
+    homeChargingRate = Number(process.env.NEXT_PUBLIC_HOME_RATE_US) || 0.17;
+    publicChargingRate = Number(process.env.NEXT_PUBLIC_PUBLIC_RATE_US) || 0.46;
+} else if (country === 'uk') {
+    gasPrice = Number(process.env.NEXT_PUBLIC_GAS_PRICE_UK) || 1.59;
+    homeChargingRate = Number(process.env.NEXT_PUBLIC_HOME_RATE_UK) || 0.23;
+    publicChargingRate = Number(process.env.NEXT_PUBLIC_PUBLIC_RATE_UK) || 0.42;
+} else if (country === 'au') {
+    gasPrice = Number(process.env.NEXT_PUBLIC_GAS_PRICE_AU) || 1.80;
+    homeChargingRate = Number(process.env.NEXT_PUBLIC_HOME_RATE_AU) || 0.28;
+    publicChargingRate = Number(process.env.NEXT_PUBLIC_PUBLIC_RATE_AU) || 0.65;
+}
  
     const finalRates = {
       gasPrice: Number(gasPrice.toFixed(2)),
