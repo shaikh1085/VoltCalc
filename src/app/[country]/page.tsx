@@ -786,24 +786,18 @@ async function fetchLiveRates(country: SelectedCountry): Promise<LiveRates> {
     // Generate lightweight, realistic dynamic market adjustments on top of live currencies
     const fluctuation = 3.60+ Math.random() * 0.04; // +/- 2% daily fluctuation coefficient
 if (country === 'us') {
-  const usdRate = rates.USD || 1.0;
-  // US Average Gas Price ko standard 4.21 per gallon ke hisab se dynamically handle karne ke liye:
-  gasPrice = (usdGas ? usdGas * usdRate : 4.21) * (1 + (Math.random() * 0.04 - 0.02)); 
-  homeChargingRate = usdHome * usdRate;
-  publicChargingRate = usdPublic * usdRate;
-} else if (country === 'uk') {
-  const gbpRate = rates.GBP || 0.78;
-  // Adjust standard fuel taxes + duties on top of the live converted GBP price
-  gasPrice = (usdGas ? usdGas * 2.0 * gbpRate : 1.45) * (1 + (Math.random() * 0.04 - 0.02));
-  homeChargingRate = (usdHome * 1.8 * gbpRate);
-  publicChargingRate = (usdPublic * 1.6 * gbpRate);
-} else if (country === 'au') {
-  const audRate = rates.AUD || 1.51;
-  // Adjust typical AU national fuel and power metrics
-  gasPrice = (usdGas ? usdGas * 1.45 * audRate : 1.78) * (1 + (Math.random() * 0.04 - 0.02));
-  homeChargingRate = (usdHome * 1.15 * audRate);
-  publicChargingRate = (usdPublic * 0.95 * audRate);
-}
+    gasPrice = inputs.gasPrice || 4.21;
+    homeChargingRate = inputs.homeChargingRate || 0.17;
+    publicChargingRate = inputs.publicChargingRate || 0.46;
+  } else if (country === 'uk') {
+    gasPrice = inputs.gasPrice || 1.42;
+    homeChargingRate = inputs.homeChargingRate || 0.23;
+    publicChargingRate = inputs.publicChargingRate || 0.42;
+  } else if (country === 'au') {
+    gasPrice = inputs.gasPrice || 1.95;
+    homeChargingRate = inputs.homeChargingRate || 0.28;
+    publicChargingRate = inputs.publicChargingRate || 0.65;
+  }
  
     const finalRates = {
       gasPrice: Number(gasPrice.toFixed(2)),
