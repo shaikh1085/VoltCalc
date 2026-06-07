@@ -778,10 +778,10 @@ async function fetchLiveRates(country: SelectedCountry): Promise<LiveRates> {
 
     // USD base values for standard conversion metrics
   // Strict fallback assignments for default calculation states
-  if (country === 'us') {
-    gasPrice = inputs.gasPrice && inputs.gasPrice !== 0 ? inputs.gasPrice : 4.21;
-    homeChargingRate = inputs.homeChargingRate && inputs.homeChargingRate !== 0 ? inputs.homeChargingRate : 0.17;
-    publicChargingRate = inputs.publicChargingRate && inputs.publicChargingRate !== 0 ? inputs.publicChargingRate : 0.46;
+ if (country === 'us') {
+    gasPrice = 3.95;
+    homeChargingRate = 0.17;
+    publicChargingRate = 0.46;
   } else if (country === 'uk') {
     gasPrice = inputs.gasPrice && inputs.gasPrice !== 0 ? inputs.gasPrice : 1.42;
     homeChargingRate = inputs.homeChargingRate && inputs.homeChargingRate !== 0 ? inputs.homeChargingRate : 0.23;
