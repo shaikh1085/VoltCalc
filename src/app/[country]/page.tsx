@@ -777,24 +777,19 @@ async function fetchLiveRates(country: SelectedCountry): Promise<LiveRates> {
     let publicChargingRate = defaults.defaultPublicChargingRate;
 
     // USD base values for standard conversion metrics
+  // Strict fallback assignments for default calculation states
   if (country === 'us') {
-  gasPrice = 3.60; //  Ab hamesha exact $3.60 hi dikhayega
-  homeChargingRate = 0.17;
-  publicChargingRate = 0.45;
-}
-
-    // Generate lightweight, realistic dynamic market adjustments on top of live currencies
-    const fluctuation = 3.60+ Math.random() * 0.04; // +/- 2% daily fluctuation coefficient
-if (country === 'us') {
-    gasPrice = inputs.gasPrice || 4.21;
-    homeChargingRate = inputs.homeChargingRate || 0.17;
-    publicChargingRate = inputs.publicChargingRate || 0.46;
+    gasPrice = inputs.gasPrice && inputs.gasPrice !== 0 ? inputs.gasPrice : 4.21;
+    homeChargingRate = inputs.homeChargingRate && inputs.homeChargingRate !== 0 ? inputs.homeChargingRate : 0.17;
+    publicChargingRate = inputs.publicChargingRate && inputs.publicChargingRate !== 0 ? inputs.publicChargingRate : 0.46;
   } else if (country === 'uk') {
-    gasPrice = inputs.gasPrice || 1.42;
-    homeChargingRate = inputs.homeChargingRate || 0.23;
-    publicChargingRate = inputs.publicChargingRate || 0.42;
+    gasPrice = inputs.gasPrice && inputs.gasPrice !== 0 ? inputs.gasPrice : 1.42;
+    homeChargingRate = inputs.homeChargingRate && inputs.homeChargingRate !== 0 ? inputs.homeChargingRate : 0.23;
+    publicChargingRate = inputs.publicChargingRate && inputs.publicChargingRate !== 0 ? inputs.publicChargingRate : 0.42;
   } else if (country === 'au') {
-    gasPrice = inputs.gasPrice || 1.95;
+    gasPrice = inputs.gasPrice && inputs.gasPrice !== 0 ? inputs.gasPrice : 1.95;
+    homeChargingRate = inputs.homeChargingRate && inputs.homeChargingRate !== 0 ? inputs.homeChargingRate : 0.28;
+    publicChargingRate = inputs.publicChargingRate && inputs.publicChargingRate !== 0 ? inputs.publicChargingRate : 0.65;
     homeChargingRate = inputs.homeChargingRate || 0.28;
     publicChargingRate = inputs.publicChargingRate || 0.65;
   }
