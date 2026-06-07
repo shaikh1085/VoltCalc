@@ -43,6 +43,7 @@ export interface I18nDictionary {
 
 export function getI18n(country: SelectedCountry): I18nDictionary {
   const isUS = country === 'us';
+  const isAU = country === 'au';
   return {
     modelling: isUS ? 'MODELING' : 'MODELLING',
     petrol: isUS ? 'Gas' : 'Petrol',
@@ -50,8 +51,8 @@ export function getI18n(country: SelectedCountry): I18nDictionary {
     gasoline: isUS ? 'Gasoline' : 'Petrol',
     litres: isUS ? 'Gallons' : 'Litres',
     litre: isUS ? 'Gallon' : 'Litre',
-    petrolPricePerLitre: isUS ? 'Gas Price ($/Gal)' : 'Petrol Price (/L)',
-    pricePerLitrePlaceholder: isUS ? 'Price per Gallon' : 'Price per Litre',
+    petrolPricePerLitre: isUS ? 'Gas ($/Gal)' : isAU ? 'Petrol (AU$/L)' : 'Petrol (£/L)',
+    pricePerLitrePlaceholder: isUS ? 'Per Gallon' : 'Per Litre',
     petrolEquivalent: isUS ? 'Gas Equivalent' : 'Petrol Equivalent',
     petrolEfficiency: isUS ? 'Gas Efficiency' : 'Petrol Efficiency',
     enterPetrolEfficiency: isUS ? 'Enter Gas Equivalent Efficiency' : 'Enter Petrol Equivalent Efficiency',
@@ -1284,7 +1285,7 @@ export default function CountrySavingsPage({ params }: PageProps) {
 
   const results = calculateEVValues(inputs, countryParam);
   const i18n = getI18n(countryParam);
-  const currencyPrefixPaddingClass = results.currencySymbol.length > 1 ? 'pl-16 md:pl-20' : 'pl-12 md:pl-16';
+  const currencyPrefixPaddingClass = results.currencySymbol.length > 2 ? 'pl-20 md:pl-24' : results.currencySymbol.length > 1 ? 'pl-16 md:pl-20' : 'pl-12 md:pl-16';
 
   // Requirement 4 - Step 1 utility to sync state upon vehicle changes
   const handleVehicleChange = (vehicleId: string, customName?: string) => {
