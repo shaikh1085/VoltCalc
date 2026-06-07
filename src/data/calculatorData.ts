@@ -549,7 +549,7 @@ export const COUNTRY_CONFIGS: Record<SelectedCountry, CountryConfig> = {
     evEfficiencyUnits: 'miles/kWh',
     defaultAnnualDistance: 12000,
   // Line 551 ko badal kar ye kar dein:
-defaultGasPrice: 3.60, // Ab ye direct Price Per Gallon ban gaya hai
+defaultGasPrice: 4.21, // Ab ye direct Price Per Gallon ban gaya hai
     defaultHomeChargingRate: 0.17,
     defaultPublicChargingRate: 0.45,
     defaultTaxBracket: 0.22,
