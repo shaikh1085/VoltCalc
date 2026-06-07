@@ -82,8 +82,8 @@ export default function App() {
             </div>
           </div>
  
-          {/* Action Row containing Country Switch and Theme Switch */}
-          <div className="flex items-center gap-3 flex-wrap">
+          {/* Action Row - Right Side: Country Switch + Theme Switch */}
+          <div className="flex items-center gap-3 flex-wrap ml-auto">
             {/* Elegant Segmented Switcher Control */}
             <div className="bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200/80 dark:border-slate-800 flex items-center gap-1 transition-all">
               <button
@@ -162,4 +162,3 @@ export default function App() {
     </div>
   );
 }
-
