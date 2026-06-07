@@ -50,7 +50,7 @@ export function getI18n(country: SelectedCountry): I18nDictionary {
     gasoline: isUS ? 'Gasoline' : 'Petrol',
     litres: isUS ? 'Gallons' : 'Litres',
     litre: isUS ? 'Gallon' : 'Litre',
-    petrolPricePerLitre: isUS ? 'Gas Price (per Gallon)' : 'Petrol Price (per gallon',
+    petrolPricePerLitre: isUS ? 'Gas Price ($/Gal)' : 'Petrol Price (/L)',
     pricePerLitrePlaceholder: isUS ? 'Price per Gallon' : 'Price per Litre',
     petrolEquivalent: isUS ? 'Gas Equivalent' : 'Petrol Equivalent',
     petrolEfficiency: isUS ? 'Gas Efficiency' : 'Petrol Efficiency',
@@ -776,21 +776,22 @@ async function fetchLiveRates(country: SelectedCountry): Promise<LiveRates> {
     let homeChargingRate = defaults.defaultHomeChargingRate;
     let publicChargingRate = defaults.defaultPublicChargingRate;
 
-    // USD base values for standard conversion metrics
-  // Strict fallback assignments for default calculation states
-if (country === 'us') {
-    gasPrice = Number(process.env.NEXT_PUBLIC_GAS_PRICE_US) || 4.19;
-    homeChargingRate = Number(process.env.NEXT_PUBLIC_HOME_RATE_US) || 0.17;
-    publicChargingRate = Number(process.env.NEXT_PUBLIC_PUBLIC_RATE_US) || 0.46;
-} else if (country === 'uk') {
-    gasPrice = Number(process.env.NEXT_PUBLIC_GAS_PRICE_UK) || 1.59;
-    homeChargingRate = Number(process.env.NEXT_PUBLIC_HOME_RATE_UK) || 0.23;
-    publicChargingRate = Number(process.env.NEXT_PUBLIC_PUBLIC_RATE_UK) || 0.42;
-} else if (country === 'au') {
-    gasPrice = Number(process.env.NEXT_PUBLIC_GAS_PRICE_AU) || 1.80;
-    homeChargingRate = Number(process.env.NEXT_PUBLIC_HOME_RATE_AU) || 0.28;
-    publicChargingRate = Number(process.env.NEXT_PUBLIC_PUBLIC_RATE_AU) || 0.65;
-}
+    // Use window.__ENV__ for client-side environment variables
+    const env = (typeof window !== 'undefined' && (window as any).__ENV__) || {};
+
+    if (country === 'us') {
+      gasPrice = Number(env.NEXT_PUBLIC_GAS_PRICE_US) || Number(process.env.NEXT_PUBLIC_GAS_PRICE_US) || 4.19;
+      homeChargingRate = Number(env.NEXT_PUBLIC_HOME_RATE_US) || Number(process.env.NEXT_PUBLIC_HOME_RATE_US) || 0.17;
+      publicChargingRate = Number(env.NEXT_PUBLIC_PUBLIC_RATE_US) || Number(process.env.NEXT_PUBLIC_PUBLIC_RATE_US) || 0.46;
+    } else if (country === 'uk') {
+      gasPrice = Number(env.NEXT_PUBLIC_GAS_PRICE_UK) || Number(process.env.NEXT_PUBLIC_GAS_PRICE_UK) || 1.42;
+      homeChargingRate = Number(env.NEXT_PUBLIC_HOME_RATE_UK) || Number(process.env.NEXT_PUBLIC_HOME_RATE_UK) || 0.23;
+      publicChargingRate = Number(env.NEXT_PUBLIC_PUBLIC_RATE_UK) || Number(process.env.NEXT_PUBLIC_PUBLIC_RATE_UK) || 0.42;
+    } else if (country === 'au') {
+      gasPrice = Number(env.NEXT_PUBLIC_GAS_PRICE_AU) || Number(process.env.NEXT_PUBLIC_GAS_PRICE_AU) || 2.10;
+      homeChargingRate = Number(env.NEXT_PUBLIC_HOME_RATE_AU) || Number(process.env.NEXT_PUBLIC_HOME_RATE_AU) || 0.28;
+      publicChargingRate = Number(env.NEXT_PUBLIC_PUBLIC_RATE_AU) || Number(process.env.NEXT_PUBLIC_PUBLIC_RATE_AU) || 0.65;
+    }
  
     const finalRates = {
       gasPrice: Number(gasPrice.toFixed(2)),
@@ -1684,8 +1685,8 @@ export default function CountrySavingsPage({ params }: PageProps) {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 {/* Petrol Price input */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] uppercase font-black tracking-widest text-slate-500 dark:text-slate-400 flex items-center justify-between">
-                    <span>{i18n.petrolPricePerLitre}</span>
+                  <label className="text-[10px] uppercase font-black tracking-widest text-slate-500 dark:text-slate-400 flex items-center justify-between gap-1">
+                    <span className="truncate">{i18n.petrolPricePerLitre}</span>
                     {isLiveRatesUpdated && (
                       <span className="text-[8px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-1.5 py-0.5 rounded-md font-bold uppercase tracking-wider font-mono animate-fade-in shrink-0">
                         Live Rate
@@ -1707,8 +1708,8 @@ export default function CountrySavingsPage({ params }: PageProps) {
 
                 {/* Main Home Charging rate input */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] uppercase font-black tracking-widest text-slate-500 dark:text-slate-400 flex items-center justify-between">
-                    <span>Home Charging Rate per kWh</span>
+                  <label className="text-[10px] uppercase font-black tracking-widest text-slate-500 dark:text-slate-400 flex items-center justify-between gap-1">
+                    <span className="truncate">Home Rate/kWh</span>
                     {isLiveRatesUpdated && (
                       <span className="text-[8px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-1.5 py-0.5 rounded-md font-bold uppercase tracking-wider font-mono animate-fade-in shrink-0">
                         Live Rate
